@@ -86,15 +86,15 @@ const MapView: React.FC<MapViewProps> = ({
 };
 
 // Helper function to calculate the center of all coordinates
-function calculateCenter(coords: Coord[]): [number, number] {
-  if (coords.length === 0) {
-    return [0, 0];
-  }
+// function calculateCenter(coords: Coord[]): [number, number] {
+//   if (coords.length === 0) {
+//     return [0, 0];
+//   }
   
-  const totalLat = coords.reduce((sum, coord) => sum + coord.lat, 0);
-  const totalLong = coords.reduce((sum, coord) => sum + coord.long, 0);
+//   const totalLat = coords.reduce((sum, coord) => sum + coord.lat, 0);
+//   const totalLong = coords.reduce((sum, coord) => sum + coord.long, 0);
   
-  return [totalLat / coords.length, totalLong / coords.length];
-}
+//   return [totalLat / coords.length, totalLong / coords.length];
+// }
 
 export default MapView;
