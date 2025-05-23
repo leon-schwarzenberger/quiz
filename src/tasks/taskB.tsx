@@ -2,8 +2,8 @@ import type { Coord, Task } from "./tasks";
 import { TaskContainer } from "../components/boxes";
 
 const location:Coord = {
-    lat: 53.544642,
-    long: 9.933461,
+    lat: 53.544648,
+    long: 9.933782,
 }
 
 const radius = 5

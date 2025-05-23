@@ -52,8 +52,10 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
     const checkCoords = (coord: Coord) => {
         const last = trace.length > 0 ? trace[trace.length - 1] : undefined
         if(!last || getDistance(last.lat, last.long, coord.lat, coord.long) > 10){
-            setTrace([...trace, coord])
+            setTrace(trace => [...trace, coord])
         }
+
+        console.log(next)
 
         if (next < tasks.length && !done) {
             
@@ -174,7 +176,7 @@ async function getAverageLocation(numSamples = 5):Promise<Coord> {
             deactivate()
         }
         return deactivate;
-    }, [active])
+    }, [active, next])
 
 
     return [next, currentLocation, trace, done, locationError, skip, prev, reset, fakeReached, currentDist]
