@@ -1,7 +1,7 @@
-import { Box, Button, FormControlLabel, Switch, ToggleButton, Typography } from "@mui/material";
+import { Box, Button, FormControlLabel, Switch, Typography } from "@mui/material";
 import { borderCoords, centerCoords, type Task } from "./tasks/tasks";
 import { useTracker } from "./tracker";
-import { FullBox, HalfBox } from "./components/boxes";
+import { FullBox } from "./components/boxes";
 import { useState } from "react";
 import { NavBar } from "./components/NavBar";
 import MapView from "./components/MapView";
