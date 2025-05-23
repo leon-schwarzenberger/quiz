@@ -91,7 +91,7 @@ async function getAverageLocation(numSamples = 5):Promise<Coord> {
     try {
       const location = await getCurrentPosition();
       samples.push(location);
-      await new Promise((r) => setTimeout(r, 1000)); // wait 1 sec between samples
+      await new Promise((r) => setTimeout(r, 100)); // wait 1 sec between samples
     } catch (error) {
       console.error("Error getting location:", error);
     }
