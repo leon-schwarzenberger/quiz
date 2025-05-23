@@ -4,10 +4,9 @@ import { TaskContainer } from "../components/boxes";
 const location:Coord = {
     lat: 53.544615,
     long: 9.935073,
-
 }
 
-const radius = 15
+const radius = 10
 
 function TaskScreen() {
 

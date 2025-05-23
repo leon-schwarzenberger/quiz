@@ -6,7 +6,7 @@ const location:Coord = {
     long: 9.933782,
 }
 
-const radius = 5
+const radius = 10
 
 function TaskScreen() {
 
