@@ -1,5 +1,5 @@
 import { Box, Button, FormControlLabel, Switch, Typography } from "@mui/material";
-import { borderCoords, centerCoords, type Task } from "./tasks/tasks";
+import { borderCoords, type Task } from "./tasks/tasks";
 import { useTracker } from "./tracker";
 import { FullBox } from "./components/boxes";
 import { useState } from "react";
