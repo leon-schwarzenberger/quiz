@@ -31,13 +31,18 @@ export function Board(props: IProps) {
     const pages = [ "Aufgabe", "Karte", "Opt."]
     const [page, setPage] = useState(pages[0])
 
+    const [showTarget, setShowTarget] = useState(false)
+
 
     const task = tasks[next]
-    const doneLocations = tasks.filter((_, index) => done || index < next).map((t) => t.location)
+    const doneLocations = tasks.filter((_, index) => done || index < next || (showTarget && index <= next)).map((t) => t.location)
 
 
     const trackToggle = () => {
         setTrack(!track);
+    }
+    const showToggle = () => {
+        setShowTarget(!showTarget);
     }
 
     return (
@@ -81,10 +86,20 @@ export function Board(props: IProps) {
                         }
                         label="Strandort tracken"
                     />
+                    <FormControlLabel
+                        control={
+                            <Switch
+                            checked={showTarget}
+                            onChange={showToggle}
+                            color="primary"
+                            />
+                        }
+                        label="Ziel anzeigen"
+                    />
 
                     <ConfirmationDialog
                         buttonText="Diese Aufgabe Überspringen"
-                        confirmationText="Willst du die nächste Aufgabe wirklcih überspringen"
+                        confirmationText="Willst du die nächste Aufgabe wirklich überspringen"
                         onAccept={skip}
                         onDecline={() => {}}
                     />
