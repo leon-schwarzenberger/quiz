@@ -42,7 +42,7 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
 
     const handleReached = () => {
         if(next + 1 < tasks.length) {
-            setNext((prev) => prev+1)
+            setNext(next + 1)
             onNext()
         } else {
             setDone(true)
@@ -52,10 +52,10 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
     const checkCoords = (coord: Coord) => {
         const last = trace.length > 0 ? trace[trace.length - 1] : undefined
         if(!last || getDistance(last.lat, last.long, coord.lat, coord.long) > 10){
-            setTrace((current) => [...current, coord])
+            setTrace([...trace, coord])
         }
 
-        if (next < tasks.length) {
+        if (next < tasks.length && !done) {
             
             const target = tasks[next].location
             const distance = getDistance(coord.lat, coord.long, target.lat, target.long);
