@@ -5,30 +5,27 @@ import 'leaflet/dist/leaflet.css';
 
 interface MapViewProps {
   border: Coord[];
+  current: Coord;
   route: Coord[];
   locations: Coord[];
-  center?: Coord;
   zoom?: number;
 }
 
 const MapView: React.FC<MapViewProps> = ({ 
   border, 
+  current,
   route, 
   locations,
-  center,
   zoom = 13 
 }) => {
   // Convert Coord objects to [lat, lng] tuples for react-leaflet
   const borderPositions: [number, number][] = border.map(coord => [coord.lat, coord.long]);
-  const routePositions: [number, number][] = route.map(coord => [coord.lat, coord.long]);
+  const routePositions: [number, number][] = [...route, current].map(coord => [coord.lat, coord.long]);
   
   // Calculate center if not provided
-  const mapCenter: [number, number] = center 
-    ? [center.lat, center.long]
-    : calculateCenter([...border, ...route]);
+  const mapCenter: [number, number] = [current.lat, current.long]
 
   // Get the last coordinate of the route for the marker
-  const lastRouteCoord = route[route.length - 1];
 
   return (
     <MapContainer
@@ -55,7 +52,7 @@ const MapView: React.FC<MapViewProps> = ({
       {routePositions.length > 0 && (
         <Polyline
           positions={routePositions}
-          color="red"
+          color="blue"
           weight={3}
           opacity={0.8}
         />
@@ -73,9 +70,9 @@ const MapView: React.FC<MapViewProps> = ({
       ))}
       
       {/* Marker for the last coordinate of the route */}
-      {lastRouteCoord && (
+      {current && (
         <CircleMarker
-          center={[lastRouteCoord.lat, lastRouteCoord.long]}
+          center={[current.lat, current.long]}
           radius={8}
           fillColor="red"
           color="darkred"

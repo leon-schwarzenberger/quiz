@@ -20,6 +20,7 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
 
 export function useTracker(tasks: Task[], active: boolean, onNext: () => void): [
     number,      // next
+    Coord,         // current
     Coord[],     // trace
     boolean,     // done
     string | null, // locationError
@@ -27,12 +28,16 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
     () => void,   // prev
     () => void,   // reset
     () => void,    // fake reach
+    number,
 ] {
 
     const [next, setNext] = useLocalStorage<number>("geo_next", 0)
     const [locationError, setLocationError] = useState<string | null>(null)
+    const [currentLocation, setCurrentLocation] = useLocalStorage<Coord>("geo_current", {lat: 0, long: 0});
     const [trace, setTrace] = useLocalStorage<Coord[]>("geo_trace", [])
     const [done, setDone] = useLocalStorage("geo_done", false)
+
+    const [currentDist, setCurrentDist] = useState(0)
 
 
     const handleReached = () => {
@@ -44,17 +49,17 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
         }
     }
 
-    const checkCoords = (lat: number, long: number) => {
-        const coord: Coord = {
-            long,
-            lat,
+    const checkCoords = (coord: Coord) => {
+        const last = trace.length > 0 ? trace[trace.length - 1] : undefined
+        if(!last || getDistance(last.lat, last.long, coord.lat, coord.long) > 10){
+            setTrace((current) => [...current, coord])
         }
-        setTrace((current) => current.concat([coord]))
 
         if (next < tasks.length) {
             
             const target = tasks[next].location
-            const distance = getDistance(lat, long, target.lat, target.long);
+            const distance = getDistance(coord.lat, coord.long, target.lat, target.long);
+            setCurrentDist(distance)
 
             if (distance <= tasks[next].radius){
                 handleReached()
@@ -65,8 +70,54 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
 
     }
 
+async function getAverageLocation(numSamples = 5):Promise<Coord> {
+  function getCurrentPosition(): Promise<Coord> {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          resolve({
+            lat: pos.coords.latitude,
+            long: pos.coords.longitude,
+          } as Coord);
+        },
+        (err) => reject(err),
+        { enableHighAccuracy: true }
+      );
+    });
+  }
 
-    const runCheck = () => {
+  const samples: Coord[] = [];
+  for (let i = 0; i < numSamples; i++) {
+    try {
+      const location = await getCurrentPosition();
+      samples.push(location);
+      await new Promise((r) => setTimeout(r, 1000)); // wait 1 sec between samples
+    } catch (error) {
+      console.error("Error getting location:", error);
+    }
+  }
+
+  if (samples.length === 0) {
+    throw new Error("No valid GPS samples collected.");
+  }
+
+  const sum = samples.reduce(
+    (acc, loc) => {
+      acc.lat += loc.lat;
+      acc.lon += loc.long;
+      return acc;
+    },
+    { lat: 0, lon: 0 }
+  );
+
+  return {
+    lat: sum.lat / samples.length,
+    long: sum.lon / samples.length,
+  };
+}
+
+
+    const runCheck = async () => {
         console.log("check")
         setLocationError(null)
         
@@ -75,31 +126,11 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
             return
         }
 
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                checkCoords(position.coords.latitude, position.coords.longitude)
-            },
-            (error) => {
-                let errorMessage = 'An error occurred while retrieving location.'
-                switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    errorMessage = 'Location access denied by user.'
-                    break
-                case error.POSITION_UNAVAILABLE:
-                    errorMessage = 'Location information is unavailable.'
-                    break
-                case error.TIMEOUT:
-                    errorMessage = 'Location request timed out.'
-                    break
-                }
-                setLocationError(errorMessage)
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
-            }
-        )
+        const current = await getAverageLocation(5);
+
+        setCurrentLocation(current)
+        checkCoords(current)
+        
     }
 
     const skip = () => {
@@ -127,7 +158,7 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
         const activate = () => {
             interval = setInterval(() => {
                         runCheck() 
-                    }, 10000); // every 10 seconds
+                    }, 5000); // every 10 seconds
         }
 
         const deactivate = () => {
@@ -146,5 +177,5 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
     }, [active])
 
 
-    return [next, trace, done, locationError, skip, prev, reset, fakeReached]
+    return [next, currentLocation, trace, done, locationError, skip, prev, reset, fakeReached, currentDist]
 }

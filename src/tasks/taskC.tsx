@@ -12,7 +12,7 @@ function TaskScreen() {
 
     return (
         <TaskContainer>
-            <p>Task B</p>
+            <p>Task C</p>
         </TaskContainer>
     )
 }

@@ -26,7 +26,7 @@ export function Board(props: IProps) {
     }
 
     const [track, setTrack] = useLocalStorage("geo_track", false)
-    const [next, trace, done, locationError, skip, prev, reset, fakeReached] = useTracker(tasks, track, handleOpenSuccess)
+    const [next, currentLocation, trace, done, locationError, skip, prev, reset, fakeReached, dist] = useTracker(tasks, track, handleOpenSuccess)
 
     const pages = [ "Aufgabe", "Karte", "Opt."]
     const [page, setPage] = useState(pages[0])
@@ -54,6 +54,7 @@ export function Board(props: IProps) {
                     {locationError && (
                         <Typography color="error">{locationError}</Typography>
                     )}
+                    <Typography>{dist}</Typography>
                     <Button onClick={fakeReached}>Fake Reached</Button>
                 </FullBox>
             )}
@@ -61,9 +62,9 @@ export function Board(props: IProps) {
                 <FullBox>
                     <MapView
                         border={borderCoords} 
+                        current={currentLocation}
                         route={trace}
                         locations={doneLocations}
-                        center={centerCoords}
                         zoom={14}
                     />
                 </FullBox>
