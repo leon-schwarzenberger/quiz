@@ -57,8 +57,9 @@ const MapView: React.FC<MapViewProps> = ({
           opacity={0.8}
         />
       )}
-      {locations.map((loc) => (
+      {locations.map((loc, index) => (
         <CircleMarker
+            key={index}
           center={[loc.lat, loc.long]}
           radius={5}
           fillColor="orange"

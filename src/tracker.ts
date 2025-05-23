@@ -33,7 +33,7 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
 
     const [next, setNext] = useLocalStorage<number>("geo_next", 0)
     const [locationError, setLocationError] = useState<string | null>(null)
-    const [currentLocation, setCurrentLocation] = useLocalStorage<Coord>("geo_current", {lat: 0, long: 0});
+    const [currentLocation, setCurrentLocation] = useState<Coord>({lat: 0, long: 0});
     const [trace, setTrace] = useLocalStorage<Coord[]>("geo_trace", [])
     const [done, setDone] = useLocalStorage("geo_done", false)
 
@@ -91,7 +91,7 @@ async function getAverageLocation(numSamples = 5):Promise<Coord> {
     try {
       const location = await getCurrentPosition();
       samples.push(location);
-      await new Promise((r) => setTimeout(r, 100)); // wait 1 sec between samples
+      await new Promise((r) => setTimeout(r, 100)); // wait 0.1 sec between samples
     } catch (error) {
       console.error("Error getting location:", error);
     }
