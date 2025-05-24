@@ -24,8 +24,8 @@ export const centerCoords: Coord = {
 
 export const borderCoords: Coord[] = [
     { // start
-        lat: 53.580358,
-        long: 10.003041,
+        lat: 53.577220, 
+        long: 10.006190,
     },
     {
         lat: 53.560630,
@@ -36,12 +36,12 @@ export const borderCoords: Coord[] = [
         long: 10.032009,
     },
     {
-        lat: 53.582153,
-        long: 10.019580,
+        lat: 53.580354,
+        long: 10.025383,
     },
-    { // end
-        lat: 53.580358,
-        long: 10.003041,
+    { // start
+        lat: 53.577220, 
+        long: 10.006190,
     },
 ]
 
