@@ -11,10 +11,7 @@ import SuccessScreen from "./components/SuccessScreen";
 import { DoneScreen } from "./components/DoneScreen";
 import { PrimaryButton } from "./components/buttons";
 
-interface IProps {
-}
-
-export function Board(props: IProps) {
+export function Board() {
     const[quest, setQuest] = useLocalStorage("geo_quest", "");
 
 
