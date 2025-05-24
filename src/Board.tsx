@@ -1,5 +1,5 @@
-import { Box, Button, FormControlLabel, Switch, Typography } from "@mui/material";
-import { borderCoords, type Task } from "./tasks/tasks";
+import { Box, FormControlLabel, Switch, Typography } from "@mui/material";
+import { borderCoords, questA, questB } from "./tasks/tasks";
 import { useTracker } from "./tracker";
 import { FullBox } from "./components/boxes";
 import { useState } from "react";
@@ -9,13 +9,16 @@ import ConfirmationDialog from "./components/ConfirmationDialog";
 import { useLocalStorage } from "./useLocalStorage";
 import SuccessScreen from "./components/SuccessScreen";
 import { DoneScreen } from "./components/DoneScreen";
+import { PrimaryButton } from "./components/buttons";
 
 interface IProps {
-    tasks: Task[];
 }
 
 export function Board(props: IProps) {
-    const {tasks} = props
+    const[quest, setQuest] = useLocalStorage("geo_quest", "");
+
+
+    const tasks = quest == "questA" ? questA : questB
 
     const [openSuccess, setOpenSuccess] = useState(false)
     const handleOpenSuccess = () => {
@@ -26,7 +29,7 @@ export function Board(props: IProps) {
     }
 
     const [track, setTrack] = useLocalStorage("geo_track", false)
-    const [next, currentLocation, done, locationError, skip, prev, reset, fakeReached, _] = useTracker(tasks, track, handleOpenSuccess)
+    const [next, currentLocation, done, locationError, skip, prev, reset, _1, _2] = useTracker(tasks, track, handleOpenSuccess)
 
     const pages = [ "Aufgabe", "Karte", "Opt."]
     const [page, setPage] = useState(pages[0])
@@ -45,12 +48,24 @@ export function Board(props: IProps) {
         setShowTarget(!showTarget);
     }
 
+    const handleReset = () => {
+        reset()
+        setQuest("")
+    }
+
     return (
         <FullBox>
             <NavBar pages={pages} currentPage={page} setPage={setPage} />
             {page == "Aufgabe" && (
                 <FullBox sx={{backgroundColor: "secondary.light"}}>
-                    {!done && task && task.screen}
+                    {quest == "" && (
+                        <Box display="flex" flexDirection="column" gap="40px" padding="40px">
+                            <PrimaryButton onClick={()=> setQuest("questA")}>A</PrimaryButton>
+                            <PrimaryButton onClick={()=> setQuest("questB")}>B</PrimaryButton>
+                        </Box>
+                    )}
+
+                    {quest != "" && !done && task && task.screen}
 
                     {done && <DoneScreen />}
 
@@ -59,7 +74,6 @@ export function Board(props: IProps) {
                     {locationError && (
                         <Typography color="error">{locationError}</Typography>
                     )}
-                    <Button onClick={fakeReached}>Fake Reach</Button>
                 </FullBox>
             )}
             {page == "Karte" && (
@@ -113,7 +127,7 @@ export function Board(props: IProps) {
                     <ConfirmationDialog
                         buttonText="Daten zurück setzen"
                         confirmationText="Willst du die wirklich die ganzen Daten zurück setzen"
-                        onAccept={reset}
+                        onAccept={handleReset}
                         onDecline={() => {}}
                     />
                 </Box>

@@ -16,7 +16,7 @@ function TaskScreen() {
                 <img src="img_mundsburg.png"  />
             </Box>
             <Typography>
-                Stelle dich an rote Kreuz.
+                Stelle dich ans rote Kreuz.
             </Typography>
         </Box>
     )
