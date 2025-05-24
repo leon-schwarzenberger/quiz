@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
 } from '@mui/material';
+import { PrimaryButton } from './buttons';
 
 interface ConfirmationDialogProps {
     open: boolean;
@@ -34,9 +34,9 @@ const SuccessScreen: React.FC<ConfirmationDialogProps> = ({
         </DialogContentText>
     </DialogContent>
     <DialogActions>
-        <Button onClick={handleClose} color="primary" variant="contained" autoFocus>
+        <PrimaryButton onClick={handleClose} color="primary" variant="contained" autoFocus>
         Weiter
-        </Button>
+        </PrimaryButton>
     </DialogActions>
     </Dialog>
   );

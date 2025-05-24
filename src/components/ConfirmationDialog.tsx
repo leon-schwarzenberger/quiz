@@ -7,6 +7,7 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
+import { PrimaryButton, SecondaryButton } from './buttons';
 
 interface ConfirmationDialogProps {
   buttonText: string;
@@ -70,12 +71,12 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDecline} color="inherit">
+          <SecondaryButton onClick={handleDecline} color="inherit">
             Nein
-          </Button>
-          <Button onClick={handleAccept} color="primary" variant="contained" autoFocus>
+          </SecondaryButton>
+          <PrimaryButton onClick={handleAccept} color="primary" variant="contained" autoFocus>
             Ja
-          </Button>
+          </PrimaryButton>
         </DialogActions>
       </Dialog>
     </>

@@ -55,8 +55,6 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
             setTrace(trace => [...trace, coord])
         }
 
-        console.log(next)
-
         if (next < tasks.length && !done) {
             
             const target = tasks[next].location

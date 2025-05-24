@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import { taskA } from "./taskA";
-import { taskB } from "./taskB";
-import { taskC } from "./taskC";
+import { taskAlster } from "./taskAlster";
+import { taskMundsburg } from "./taskMundsburg";
+import { taskMusiker } from "./taskMusiker";
+import { taskTRUCYS } from "./taskTRUCYS";
 
 export interface Coord {
     long: number;
@@ -42,8 +43,12 @@ export const borderCoords: Coord[] = [
     },
 ]
 
-export const allTasks = [
-    taskA,
-    taskB,
-    taskC,
+export const questA = [
+    taskAlster,
+
+    taskTRUCYS,
+    // ...
+    taskMusiker,
+    taskMundsburg,
+    // ...
 ]

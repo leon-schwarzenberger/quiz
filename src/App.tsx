@@ -1,14 +1,11 @@
 import './App.css'
-import { allTasks } from './tasks/tasks'
+import { questA } from './tasks/tasks'
 import { Board } from './Board'
 
 function App() {
 
-
-  
-
   return (
-      <Board tasks={allTasks} />
+      <Board tasks={questA} />
   )
 }
 

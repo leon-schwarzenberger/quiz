@@ -19,8 +19,8 @@ export function NavBar (props: NavBarProps){
                 color={currentPage === page ? 'secondary' : 'inherit'}
                 onClick={() => setPage(page)}
                 sx={{
-                    color: currentPage === page ? 'white' : 'rgba(255, 255, 255, 0.7)',
-                    backgroundColor: currentPage === page ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                    color: 'white',
+                    backgroundColor: currentPage === page ? 'primary.dark' : 'transparent',
                     '&:hover': {
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
                     },

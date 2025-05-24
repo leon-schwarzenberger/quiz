@@ -26,7 +26,7 @@ export function Board(props: IProps) {
     }
 
     const [track, setTrack] = useLocalStorage("geo_track", false)
-    const [next, currentLocation, trace, done, locationError, skip, prev, reset, fakeReached, dist] = useTracker(tasks, track, handleOpenSuccess)
+    const [next, currentLocation, trace, done, locationError, skip, prev, reset, fakeReached, _] = useTracker(tasks, track, handleOpenSuccess)
 
     const pages = [ "Aufgabe", "Karte", "Opt."]
     const [page, setPage] = useState(pages[0])
@@ -49,7 +49,7 @@ export function Board(props: IProps) {
         <FullBox>
             <NavBar pages={pages} currentPage={page} setPage={setPage} />
             {page == "Aufgabe" && (
-                <FullBox>
+                <FullBox sx={{backgroundColor: "secondary.light"}}>
                     {!done && task && task.screen}
 
                     {done && <DoneScreen />}
@@ -59,8 +59,7 @@ export function Board(props: IProps) {
                     {locationError && (
                         <Typography color="error">{locationError}</Typography>
                     )}
-                    <Typography>{dist}</Typography>
-                    <Button onClick={fakeReached}>Fake Reached</Button>
+                    <Button onClick={fakeReached}>Fake Reach</Button>
                 </FullBox>
             )}
             {page == "Karte" && (
