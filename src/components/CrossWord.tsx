@@ -113,7 +113,7 @@ export function CrossWord() {
             </Box>
             <Typography display="flex">1. Gewässer in Hamburg</Typography> {/* alsTer */}
             <Typography display="flex">2. Künstler in Hamburg (Vor + Nachname)</Typography> {/* udo lindenbeRg */}
-            <Typography display="flex" textAlign="start" whiteSpace="break-spaces">{"3. Wie viele Bezirke hat Hamburg?\nA: 7, B: 9, C: 11, D: 13"}</Typography> {/* A */}
+            <Typography display="flex" textAlign="start" whiteSpace="break-spaces">{"3. Wie viele Bezirke hat Hamburg?\nU: 7, V: 9, W: 11"}</Typography> {/* A */}
             <Typography display="flex" textAlign="start">4. Wofür muss man sehr für am Sonntag aufstehen?</Typography> {/* fisChmarkt */}
             <Typography display="flex" textAlign="start" whiteSpace="break-spaces">{"5. Wie hoch ist der Michel?\nX: 122, Y: 132, Z: 142"}</Typography> {/* Y */}
             <Typography display="flex" textAlign="start">6. Stadtteil mit vielen Brücken und Kanälen</Typography> {/* speicherStadt */}
