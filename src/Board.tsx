@@ -26,7 +26,7 @@ export function Board(props: IProps) {
     }
 
     const [track, setTrack] = useLocalStorage("geo_track", false)
-    const [next, currentLocation, trace, done, locationError, skip, prev, reset, fakeReached, _] = useTracker(tasks, track, handleOpenSuccess)
+    const [next, currentLocation, done, locationError, skip, prev, reset, fakeReached, _] = useTracker(tasks, track, handleOpenSuccess)
 
     const pages = [ "Aufgabe", "Karte", "Opt."]
     const [page, setPage] = useState(pages[0])
@@ -67,7 +67,7 @@ export function Board(props: IProps) {
                     <MapView
                         border={borderCoords} 
                         current={currentLocation}
-                        route={trace}
+                        route={[]}
                         locations={doneLocations}
                         zoom={14}
                     />

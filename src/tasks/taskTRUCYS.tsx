@@ -2,9 +2,9 @@ import { CrossWord } from "../components/CrossWord";
 import type { Coord, Task } from "./tasks";
 import { Box } from "@mui/material";
 
-const location:Coord = { // TODO
-    lat: 53.578596,
-    long: 10.023075,
+const location:Coord = {
+    lat: 53.578031,
+    long: 10.015764,
 }
 
 const radius = 15

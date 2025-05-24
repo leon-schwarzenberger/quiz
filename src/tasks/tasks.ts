@@ -3,6 +3,8 @@ import { taskAlster } from "./taskAlster";
 import { taskMundsburg } from "./taskMundsburg";
 import { taskMusiker } from "./taskMusiker";
 import { taskTRUCYS } from "./taskTRUCYS";
+import { taskSpanisch } from "./taskSpanisch";
+import { taskEnd } from "./taskEnd";
 
 export interface Coord {
     long: number;
@@ -44,13 +46,19 @@ export const borderCoords: Coord[] = [
 ]
 
 export const questA = [
-    taskMundsburg,
-
-    
-    taskAlster,
-
     taskTRUCYS,
-    // ...
     taskMusiker,
-    // ...
+    taskMundsburg,
+    taskSpanisch,
+    taskAlster,
+    taskEnd,
+]
+
+export const questB = [
+    taskMundsburg,
+    taskSpanisch,
+    taskAlster,
+    taskTRUCYS,
+    taskMusiker,
+    taskEnd,
 ]

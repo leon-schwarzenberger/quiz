@@ -21,7 +21,6 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
 export function useTracker(tasks: Task[], active: boolean, onNext: () => void): [
     number,      // next
     Coord,         // current
-    Coord[],     // trace
     boolean,     // done
     string | null, // locationError
     () => void,   // skip
@@ -34,7 +33,6 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
     const [next, setNext] = useLocalStorage<number>("geo_next", 0)
     const [locationError, setLocationError] = useState<string | null>(null)
     const [currentLocation, setCurrentLocation] = useState<Coord>({lat: 0, long: 0});
-    const [trace, setTrace] = useLocalStorage<Coord[]>("geo_trace", [])
     const [done, setDone] = useLocalStorage("geo_done", false)
 
     const [currentDist, setCurrentDist] = useState(0)
@@ -50,11 +48,6 @@ export function useTracker(tasks: Task[], active: boolean, onNext: () => void): 
     }
 
     const checkCoords = (coord: Coord) => {
-        const last = trace.length > 0 ? trace[trace.length - 1] : undefined
-        if(!last || getDistance(last.lat, last.long, coord.lat, coord.long) > 10){
-            setTrace(trace => [...trace, coord])
-        }
-
         if (next < tasks.length && !done) {
             
             const target = tasks[next].location
@@ -144,7 +137,6 @@ async function getAverageLocation(numSamples = 5):Promise<Coord> {
 
     const reset = () => {
         setNext(0)
-        setTrace([])
         setDone(false)
     }
 
@@ -177,5 +169,5 @@ async function getAverageLocation(numSamples = 5):Promise<Coord> {
     }, [active, next])
 
 
-    return [next, currentLocation, trace, done, locationError, skip, prev, reset, fakeReached, currentDist]
+    return [next, currentLocation, done, locationError, skip, prev, reset, fakeReached, currentDist]
 }
