@@ -1,8 +1,8 @@
 import { CrossWord } from "../components/CrossWord";
 import type { Coord, Task } from "./tasks";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
-const location:Coord = {
+const location:Coord = { // TODO
     lat: 53.578596,
     long: 10.023075,
 }

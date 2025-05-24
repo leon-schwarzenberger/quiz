@@ -44,11 +44,13 @@ export const borderCoords: Coord[] = [
 ]
 
 export const questA = [
+    taskMundsburg,
+
+    
     taskAlster,
 
     taskTRUCYS,
     // ...
     taskMusiker,
-    taskMundsburg,
     // ...
 ]
